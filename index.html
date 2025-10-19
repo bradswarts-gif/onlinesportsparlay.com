@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlineSportsParlays | Expert Sports Betting Picks & Calculators</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #1a5f23;
+            --secondary: #0d3b1e;
+            --accent: #e8b923;
+            --light: #f5f5f5;
+            --dark: #222;
+            --gray: #777;
+        }
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+       
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+       
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+       
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+       
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+       
+        .logo span {
+            color: var(--accent);
+        }
+       
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+       
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+       
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+       
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+       
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+       
+        /* Hero Section */
+        .hero {
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+       
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+       
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+       
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+       
+        .btn:hover {
+            background-color: #ffcc33;
+            transform: translateY(-2px);
+        }
+       
+        /* Picks Section */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 1.5rem;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+       
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+       
+        .picks-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+       
+        .pick-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+       
+        .pick-card:hover {
+            transform: translateY(-5px);
+        }
+       
+        .pick-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+       
+        .pick-sport {
+            font-weight: 600;
+        }
+       
+        .pick-date {
+            opacity: 0.9;
+        }
+       
+        .pick-body {
+            padding: 1.5rem;
+        }
+       
+        .pick-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+       
+        .pick-team {
+            text-align: center;
+            flex: 1;
+        }
+       
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 0.5rem;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--gray);
+        }
+       
+        .vs {
+            font-weight: bold;
+            margin: 0 1rem;
+        }
+       
+        .pick-details {
+            margin-bottom: 1rem;
+        }
+       
+        .pick-type {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+       
+        .pick-odds {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+       
+        .pick-analysis {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+       
+        /* Calculator Section */
+        .calculator {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+       
+        .calculator-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+       
+        .form-group {
+            margin-bottom: 1rem;
+        }
+       
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+       
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+       
+        .calculator-result {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+       
+        .ev-positive {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+       
+        .ev-negative {
+            color: #d9534f;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+       
+        /* CTA Section */
+        .cta {
+            background-color: var(--secondary);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+       
+        .cta h2 {
+            margin-bottom: 1rem;
+        }
+       
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+       
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+       
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+       
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+       
+        .footer-column ul {
+            list-style: none;
+        }
+       
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+       
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+       
+        .footer-column ul li a:hover {
+            color: white;
+        }
+       
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+       
+        .social-icons a {
+            color: white;
+            background-color: #444;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+       
+        .social-icons a:hover {
+            background-color: var(--primary);
+        }
+       
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+       
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+           
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+           
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+           
+            .hero h1 {
+                font-size: 2rem;
+            }
+           
+            .calculator-form {
+                grid-template-columns: 1fr;
+            }
+        }
+       
+        @media (max-width: 576px) {
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+           
+            nav {
+                width: 100%;
+                display: none;
+            }
+           
+            nav.active {
+                display: block;
+            }
+           
+            nav ul {
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+           
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">Online<span>SportsParlays</span></a>
+            <div class="mobile-menu">☰</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#daily-picks">Daily Picks</a></li>
+                    <li><a href="#weekly-picks">Weekly Picks</a></li>
+                    <li><a href="#calculator">EV Calculator</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Expert Sports Betting Picks & Analysis</h1>
+            <p>Maximize your betting profits with our data-driven picks and positive EV calculators. Join thousands of successful bettors today.</p>
+            <a href="#daily-picks" class="btn">View Today's Picks</a>
+        </div>
+    </section>
+
+    <!-- Daily Picks Section -->
+    <section id="daily-picks">
+        <div class="container">
+            <h2 class="section-title">Today's Top Picks</h2>
+            <p class="section-subtitle">Hand-picked selections based on advanced analytics, historical data, and current team performance.</p>
+            <div class="picks-container">
+                <!-- Pick 1 -->
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div class="pick-sport">NBA</div>
+                        <div class="pick-date">Today</div>
+                    </div>
+                    <div class="pick-body">
+                        <div class="pick-teams">
+                            <div class="pick-team">
+                                <div class="team-logo">LAL</div>
+                                <div>Lakers</div>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="pick-team">
+                                <div class="team-logo">BOS</div>
+                                <div>Celtics</div>
+                            </div>
+                        </div>
+                        <div class="pick-details">
+                            <span class="pick-type">Moneyline</span>
+                            <div class="pick-odds">+145</div>
+                            <div class="pick-analysis">Lakers have covered 7 of their last 10 as road underdogs.</div>
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- Pick 2 -->
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div class="pick-sport">NFL</div>
+                        <div class="pick-date">Today</div>
+                    </div>
+                    <div class="pick-body">
+                        <div class="pick-teams">
+                            <div class="pick-team">
+                                <div class="team-logo">KC</div>
+                                <div>Chiefs</div>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="pick-team">
+                                <div class="team-logo">BUF</div>
+                                <div>Bills</div>
+                            </div>
+                        </div>
+                        <div class="pick-details">
+                            <span class="pick-type">Over/Under</span>
+                            <div class="pick-odds">Over 47.5</div>
+                            <div class="pick-analysis">Both teams averaging 28+ PPG, favorable weather conditions.</div>
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- Pick 3 -->
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div class="pick-sport">MLB</div>
+                        <div class="pick-date">Today</div>
+                    </div>
+                    <div class="pick-body">
+                        <div class="pick-teams">
+                            <div class="pick-team">
+                                <div class="team-logo">NYY</div>
+                                <div>Yankees</div>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="pick-team">
+                                <div class="team-logo">HOU</div>
+                                <div>Astros</div>
+                            </div>
+                        </div>
+                        <div class="pick-details">
+                            <span class="pick-type">Run Line</span>
+                            <div class="pick-odds">Yankees -1.5</div>
+                            <div class="pick-analysis">Cole on mound, Yankees 8-2 in his last 10 starts.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Weekly Picks Section -->
+    <section id="weekly-picks">
+        <div class="container">
+            <h2 class="section-title">This Week's Top Parlays</h2>
+            <p class="section-subtitle">Multi-leg bets with higher potential returns, carefully analyzed for maximum value.</p>
+            <div class="picks-container">
+                <!-- Parlay 1 -->
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div class="pick-sport">Mixed</div>
+                        <div class="pick-date">This Week</div>
+                    </div>
+                    <div class="pick-body">
+                        <div class="pick-teams">
+                            <div class="pick-team">
+                                <div class="team-logo">3-Leg</div>
+                                <div>Parlay</div>
+                            </div>
+                        </div>
+                        <div class="pick-details">
+                            <span class="pick-type">Parlay</span>
+                            <div class="pick-odds">+650</div>
+                            <div class="pick-analysis">
+                                <ul>
+                                    <li>Packers ML</li>
+                                    <li>Bucks -4.5</li>
+                                    <li>Cardinals +1.5</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- Parlay 2 -->
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div class="pick-sport">NBA</div>
+                        <div class="pick-date">This Week</div>
+                    </div>
+                    <div class="pick-body">
+                        <div class="pick-teams">
+                            <div class="pick-team">
+                                <div class="team-logo">4-Leg</div>
+                                <div>Parlay</div>
+                            </div>
+                        </div>
+                        <div class="pick-details">
+                            <span class="pick-type">Parlay</span>
+                            <div class="pick-odds">+1200</div>
+                            <div class="pick-analysis">
+                                <ul>
+                                    <li>Warriors +3</li>
+                                    <li>Nuggets ML</li>
+                                    <li>Over 225 (LAL/DAL)</li>
+                                    <li>76ers -5</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- Parlay 3 -->
+                <div class="pick-card">
+                    <div class="pick-header">
+                        <div class="pick-sport">NFL</div>
+                        <div class="pick-date">This Week</div>
+                    </div>
+                    <div class="pick-body">
+                        <div class="pick-teams">
+                            <div class="pick-team">
+                                <div class="team-logo">3-Leg</div>
+                                <div>Parlay</div>
+                            </div>
+                        </div>
+                        <div class="pick-details">
+                            <span class="pick-type">Parlay</span>
+                            <div class="pick-odds">+450</div>
+                            <div class="pick-analysis">
+                                <ul>
+                                    <li>Ravens -3.5</li>
+                                    <li>Eagles ML</li>
+                                    <li>Under 49.5 (SF/SEA)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EV Calculator Section -->
+    <section id="calculator">
+        <!-- UPDATED EV CALCULATOR SECTION -->
+<!-- Replace the entire section with id="calculator" with this code -->
+
+<section id="calculator">
+    <div class="container">
+        <h2 class="section-title">Positive EV Calculator</h2>
+        <p class="section-subtitle" style="color: #222;">Enter your benchmark odds below—what you think the odds of winning should be, or use sharp books like Pinnacle odds as a benchmark. Then enter your sportsbook odds and click the Calculate EV button. The higher the EV, the better the bet. <a href="#" style="color: var(--primary); text-decoration: underline;">Learn more about expected value wagering</a></p>
+        <div class="calculator">
+            <form class="calculator-form">
+                <div class="form-group">
+                    <label for="sportsbook-odds">Sportsbook Odds (e.g., +150, -110)</label>
+                    <input type="text" id="sportsbook-odds" class="form-control" placeholder="+150">
+                </div>
+                <div class="form-group">
+                    <label for="benchmark-odds">Benchmark Odds (e.g., +130, -105)</label>
+                    <input type="text" id="benchmark-odds" class="form-control" placeholder="+130">
+                </div>
+                <div class="form-group">
+                    <label for="stake">Stake Amount ($)</label>
+                    <input type="number" id="stake" class="form-control" placeholder="100" min="0">
+                </div>
+                <div class="form-group">
+                    <button type="button" id="calculate-btn" class="btn" style="width: 100%;">Calculate EV</button>
+                </div>
+            </form>
+            <div class="calculator-result">
+                <h3>Expected Value (EV):</h3>
+                <div id="ev-result">Enter values to calculate</div>
+                <div id="ev-explanation"></div>
+            </div>
+        </div>
+    </div>
+</section>
+    </section>
+<!-- About Section -->
+    <section id="about" style="padding: 4rem 0; background-color: white;">
+        <div class="container">
+            <h2 class="section-title">About OnlineSportsParlays</h2>
+            
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">Who We Are</h3>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                    OnlineSportsParlays uses AI and traditional handicapping to find the best betting opportunities in sports. We're not guessing—we're using technology to dig deeper than the average bettor ever could.
+                </p>
+                
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">How We Do It</h3>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                    We combine machine learning with old-school sports analysis. Our AI studies thousands of games to understand how teams actually play—their coaching styles, their tendencies in different situations, and how they match up against opponents.
+                </p>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                    But we don't stop there. We also track line movements and follow where the sharp money is going. This gives us two advantages: we know what the "smart money" sees, and we can spot when the public is pushing lines in the wrong direction.
+                </p>
+                
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">What Makes Us Different</h3>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                    Most betting sites just give you picks. We create our own predicted scores and money lines first, then compare them to what the sportsbooks are offering. When we find a gap—where our numbers show better value than the posted odds—that's a positive EV opportunity.
+                </p>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                    Think of it like this: if we predict a game should be Chiefs -4, but the line is only -2.5, we've found value. That's where AI gives us an edge. It processes more data, faster, and catches patterns humans miss.
+                </p>
+                
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">Our Approach</h3>
+                <ul style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 2; padding-left: 2rem;">
+                    <li>AI analyzes team performance, coaching decisions, and playing styles</li>
+                    <li>We generate our own projected lines and totals</li>
+                    <li>We monitor where sharp bettors are placing their money</li>
+                    <li>We compare our numbers to sportsbook lines to find value</li>
+                    <li>We only recommend bets with positive expected value</li>
+                </ul>
+                
+                <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem;">The Bottom Line</h3>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8;">
+                    We're blending the best of both worlds: the speed and pattern recognition of AI with the insights of traditional handicapping. The result? Smarter picks, better value, and a real edge over the sportsbooks.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; font-weight: 600; color: var(--secondary);">
+                    No hype. No guaranteed locks. Just data-driven analysis and positive EV opportunities.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+
+<!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Start Winning?</h2>
+            <p>Join our premium membership for access to all our expert picks, advanced analytics, and personalized betting strategies.</p>
+            <a href="#" class="btn">Join Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>OnlineSportsParlays</h3>
+                    <p>Your trusted source for data-driven sports betting insights and picks.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#daily-picks">Daily Picks</a></li>
+                        <li><a href="#weekly-picks">Weekly Picks</a></li>
+                        <li><a href="#calculator">EV Calculator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Responsible Gaming</a></li>
+                        <li><a href="#">Affiliate Disclosure</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:support@onlinesportsparlays.com">support@onlinesportsparlays.com</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 OnlineSportsParlays.com. All rights reserved.</p>
+                <p>Disclaimer: This site is for entertainment purposes only. Gambling involves risk. Please gamble responsibly.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+       
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+               
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+               
+                // Close mobile menu if open
+                document.querySelector('nav').classList.remove('active');
+            });
+        });
+       
+        // UPDATED JAVASCRIPT
+// Replace the EV Calculator section in the <script> tag (starting from "// EV Calculator" comment)
+
+// EV Calculator
+document.getElementById('calculate-btn').addEventListener('click', function() {
+    const sportsbookOddsInput = document.getElementById('sportsbook-odds').value;
+    const benchmarkOddsInput = document.getElementById('benchmark-odds').value;
+    const stake = parseFloat(document.getElementById('stake').value);
+    
+    if (!sportsbookOddsInput || !benchmarkOddsInput || isNaN(stake)) {
+        alert('Please fill in all fields with valid values.');
+        return;
+    }
+    
+    // Function to convert American odds to decimal odds
+    function americanToDecimal(oddsInput) {
+        if (oddsInput.startsWith('+')) {
+            return (parseInt(oddsInput) / 100) + 1;
+        } else if (oddsInput.startsWith('-')) {
+            return (100 / Math.abs(parseInt(oddsInput))) + 1;
+        } else {
+            return null;
+        }
+    }
+    
+    // Function to convert American odds to probability
+    function americanToProbability(oddsInput) {
+        if (oddsInput.startsWith('+')) {
+            const odds = parseInt(oddsInput);
+            return 100 / (odds + 100);
+        } else if (oddsInput.startsWith('-')) {
+            const odds = Math.abs(parseInt(oddsInput));
+            return odds / (odds + 100);
+        } else {
+            return null;
+        }
+    }
+    
+    // Convert sportsbook odds to decimal
+    const sportsbookDecimal = americanToDecimal(sportsbookOddsInput);
+    if (sportsbookDecimal === null) {
+        alert('Please enter valid American odds for Sportsbook Odds (e.g., +150 or -110)');
+        return;
+    }
+    
+    // Convert benchmark odds to probability
+    const benchmarkProbability = americanToProbability(benchmarkOddsInput);
+    if (benchmarkProbability === null) {
+        alert('Please enter valid American odds for Benchmark Odds (e.g., +130 or -105)');
+        return;
+    }
+    
+    // Calculate EV
+    const ev = (benchmarkProbability * (sportsbookDecimal - 1) * stake) - ((1 - benchmarkProbability) * stake);
+    
+    // Display result
+    const evResult = document.getElementById('ev-result');
+    const evExplanation = document.getElementById('ev-explanation');
+    
+    if (ev > 0) {
+        evResult.innerHTML = `<span class="ev-positive">+$${ev.toFixed(2)}</span>`;
+        evExplanation.textContent = `This is a positive EV bet! On average, you'll make $${ev.toFixed(2)} per $${stake} wagered over the long run.`;
+    } else {
+        evResult.innerHTML = `<span class="ev-negative">-$${Math.abs(ev).toFixed(2)}</span>`;
+        evExplanation.textContent = `This is a negative EV bet. On average, you'll lose $${Math.abs(ev).toFixed(2)} per $${stake} wagered over the long run.`;
+    }
+});
+
+// Add sample data to the calculator for demonstration
+window.onload = function() {
+    document.getElementById('sportsbook-odds').value = '+150';
+    document.getElementById('benchmark-odds').value = '+130';
+    document.getElementById('stake').value = '100';
+};
+        window.onload = function() {
+            document.getElementById('odds').value = '+150';
+            document.getElementById('probability').value = '55';
+            document.getElementById('stake').value = '100';
+        };
+    </script>
+</body>
+</html> 
